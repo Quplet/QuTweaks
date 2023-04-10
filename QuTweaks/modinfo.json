@@ -1,0 +1,12 @@
+{
+	"id": "qu.qu_tweaks",
+	"name": "QuTweaks",
+	"version": "0.1.0",
+	"hide_version": false,
+	"authors": "Qu",
+	"description": "A collection of various game tweaks.",
+	"requirements": [],
+	"requirements_names": [],
+	"tags": ["Game Mechanics"],
+	"checksum_override_version": false
+}
