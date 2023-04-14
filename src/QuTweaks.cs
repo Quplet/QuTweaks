@@ -26,6 +26,7 @@ namespace QuTweaks
             On.LizardTongue.Update += LizardTongueUpdateHook;
             IL.DropBug.FlyingWeapon += DropBugFlyingWeaponInject;
             On.Lizard.Violence += LizardViolenceHook;
+            On.TubeWorm.Tongue.Update += TubeWormTongueUpdateHook;
         }
 
         // For the Easier tongue break option
@@ -131,6 +132,32 @@ namespace QuTweaks
             // Flip lizziboi
             self.turnedByRockDirection = (int) Mathf.Sign(source.pos.x - source.lastPos.x);
             self.turnedByRockCounter = 20;
+        }
+
+        private void TubeWormTongueUpdateHook(On.TubeWorm.Tongue.orig_Update orig, TubeWorm.Tongue self)
+        {
+            orig(self);
+
+            if (!self.Attached) return;
+            Player player = null;
+            foreach (var grasp in self.worm.grabbedBy)
+            {
+                if (!(grasp.grabber is Player p)) continue;
+                player = p;
+                break;
+            }
+            if (player == null) return;
+            
+            var movement = 0f;
+            
+            if (player.input[0].y > 0) movement = -3f;
+            else if (player.input[0].y < 0) movement = 1f;
+
+            if (movement == 0f) return;
+            var tongueLength = Vector2.Distance(self.pos, self.worm.mainBodyChunk.pos);
+            //self.requestedRopeLength = Mathf.Clamp(self.requestedRopeLength, tongueLength - 3f, tongueLength + 1f);
+            self.requestedRopeLength = Mathf.Clamp(self.requestedRopeLength + movement, 50f, self.idealRopeLength);
+            self.elastic = 1f;
         }
 
         // For registering the options menu

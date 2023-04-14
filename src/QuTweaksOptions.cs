@@ -7,12 +7,15 @@ namespace QuTweaks
         public readonly Configurable<bool> EasierTongueBreak;
         public readonly Configurable<bool> LessTriggerHappyDropwigs;
         public readonly Configurable<bool> HeavierSpears;
+        public readonly Configurable<bool> ControllableGrappleWorms;
 
         public QuTweaksOptions()
         {
             EasierTongueBreak = config.Bind(nameof(EasierTongueBreak), true);
             LessTriggerHappyDropwigs = config.Bind(nameof(LessTriggerHappyDropwigs), true);
             HeavierSpears = config.Bind(nameof(HeavierSpears), false);
+            ControllableGrappleWorms = config.Bind(nameof(ControllableGrappleWorms), true);
+
         }
 
         public override void Initialize()
@@ -58,11 +61,18 @@ namespace QuTweaks
             var heavierSpearsConfig = new QuConfigOption(new OpCheckBox(HeavierSpears, 16f, 440f),
                 "Heavier spears",
                 "Causes lizards to flip over upon being hit in the head by a thrown spear. Default is false.");
+
+            var controllableGrappleWormsConfig =
+                new QuConfigOption(new OpCheckBox(ControllableGrappleWorms, 16f, 400f),
+                    "Controllable grapple worms",
+                    "Allows the the player to control the length of the grapple worm's tongue while attached. Default is true.");
+            
             
             opTab.AddItems(titleBox);
             opTab.AddItems(easierTongueBreakConfig.Elements);
             opTab.AddItems(lessTriggerHappyDropwigsConfig.Elements);
             opTab.AddItems(heavierSpearsConfig.Elements);
+            opTab.AddItems(controllableGrappleWormsConfig.Elements);
         }
 
         private class QuConfigOption
